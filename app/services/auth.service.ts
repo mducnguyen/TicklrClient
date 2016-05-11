@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {User} from "../models/user";
 import {UserService} from "./user.service";
 import {Headers, Http} from "@angular/http";
+import {AbstractStorage} from "./storage/storage.abstract";
 
 /**
  * @author DucNguyenMinh
@@ -28,7 +29,7 @@ export class AuthService {
      * @param jwtHelper decodes JWT Token
      * @param _userService
      */
-    constructor(private _http:Http, private jwtHelper:JwtHelper, private _userService:UserService) {
+    constructor(private _http:Http, private jwtHelper:JwtHelper, private _userService:UserService, private _storage:AbstractStorage) {
 
         let jwtToken = this.getToken();
 
@@ -98,7 +99,7 @@ export class AuthService {
      * Logs user out
      */
     public logout() {
-        localStorage.removeItem(AUTH_TOKEN);
+        this._storage.removeItem(AUTH_TOKEN);
         this._currentUser = null;
     }
 
@@ -115,14 +116,14 @@ export class AuthService {
      * @param token authentication token
      */
     private saveToken(token:string) {
-        localStorage.setItem(AUTH_TOKEN, token);
+        this._storage.setItem(AUTH_TOKEN, token);
     }
 
     /**
      * @return Authentication token retrieved from storage
      */
     private getToken():string {
-        return localStorage.getItem(AUTH_TOKEN);
+        return this._storage.getItem(AUTH_TOKEN);
     }
 }
 
