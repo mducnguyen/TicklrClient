@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+node_modules
+bower_components
+.floo*
+.idea
+*.swo
+*.swp
+*.iml
+*.log
+app/**/*.js
+app/**/*.map
+typings

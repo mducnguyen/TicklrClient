@@ -1,0 +1,25 @@
+/**
+ * Common
+ */
+
+/**
+ * AuthComponent
+ */
+.login-modal {
+    display: block;
+    position: fixed;
+    top: 100px;
+}
+
+.login-modal input[type=text] {
+    margin-bottom: 10px;
+}
+.login-modal .controls {
+    margin-top: 20px;
+    text-align: right;
+
+}
+.login-modal .controls button {
+    margin-left: 5px;
+    width: 80px;
+}
