@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {AuthHttp} from "angular2-jwt/angular2-jwt";
 import {User} from "../models/user";
+import {AppConfig} from "../config/app.config";
 
 /**
  * @author DucNguyenMinh
@@ -9,13 +10,10 @@ import {User} from "../models/user";
  */
 
 /**
- *  TODO: comment
+ *  Manages user resources
  */
 @Injectable()
-export class UserService{
-
-    // TODO: Dynamic user_endpoint
-    private USERS_ENDPOINT:string = 'http://192.168.1.8:8080/api/users';
+export class UserService {
 
     /**
      * @param _http
@@ -24,14 +22,13 @@ export class UserService{
     }
 
     /**
-     * TODO: comment!!!
-     * @param id
-     * @returns {null}
+     * Fetches a user resource located at url
+     * @param url URL to the user resource
+     * @return
      */
-    getUser(id:string):Observable<User> {
+    getUser(url:string):Observable<User> {
 
-        // TODO: remove USER_ENDPOINT
-        return this._http.get(this.USERS_ENDPOINT + '/' + id)
+        return this._http.get(url)
             .map(res => {
                 if (200 == res.status) {
                     let result = res.json();

@@ -1,4 +1,4 @@
-import {AbstractStorage} from "./storage.abstract";
+import {AbstractStorage} from "./abstract.storage";
 /**
  * @author ngnmhieu
  * @since 12.05.16
@@ -25,7 +25,7 @@ export class DelegateStorage extends AbstractStorage {
     }
 
     key(index:number):string {
-        return this._nativeStorage.getItem(index);
+        return this._nativeStorage[index];
     }
 
     removeItem(key:string):void {
