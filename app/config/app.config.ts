@@ -4,8 +4,9 @@
  */
 
 export class AppConfig {
-    API_ENDPOINT: {
-        AUTH: string;
+    API_ENDPOINT:{
+        AUTH:string;
+        REGISTER:string;
     };
 }
 
@@ -13,6 +14,7 @@ let serverUrl = "http://localhost:8080";
 
 export const APP_CONFIG:AppConfig = {
     API_ENDPOINT: {
-        AUTH: serverUrl + "/api/auth/request-token"
+        AUTH: serverUrl + "/api/auth/request-token",
+        REGISTER: serverUrl + "/api/users"
     }
 };

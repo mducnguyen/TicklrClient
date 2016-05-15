@@ -10,3 +10,6 @@ bower_components
 app/**/*.js
 app/**/*.map
 typings
+.sass-cache
+assets/**/*.css
+assets/**/*.map

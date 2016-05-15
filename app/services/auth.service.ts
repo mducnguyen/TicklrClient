@@ -4,7 +4,7 @@ import 'rxjs/Rx';
 import {Observable} from "rxjs/Observable";
 import {User} from "../models/user";
 import {UserService} from "./user.service";
-import {Headers, Http} from "@angular/http";
+import {Response, Headers, Http} from "@angular/http";
 import {AbstractStorage} from "./storage/abstract.storage";
 import {AppConfig} from "../config/app.config";
 
@@ -18,6 +18,7 @@ import {AppConfig} from "../config/app.config";
 export class AuthService {
 
     private _authEndpoint:string;
+    private _registerEndpoint:string;
 
     // authenticated user
     private _currentUser:User;
@@ -27,16 +28,18 @@ export class AuthService {
      * @param jwtHelper decodes JWT Token
      * @param _userService
      */
-    constructor(private _http:Http, private jwtHelper:JwtHelper, private _userService:UserService,
+    constructor(private _http:Http, private jwtHelper:JwtHelper,
+                private _userService:UserService,
                 private _storage:AbstractStorage, appConfig:AppConfig) {
 
         this._authEndpoint = appConfig.API_ENDPOINT.AUTH;
+        this._registerEndpoint = appConfig.API_ENDPOINT.REGISTER;
 
         let jwtToken = this.getToken();
 
         if (!this.isLoggedIn() && jwtToken != null) {
             let jwtContent = this.jwtHelper.decodeToken(jwtToken);
-            this._userService.getUser(jwtContent.uri).subscribe(user => {
+            this._userService.getUser(jwtContent.url).subscribe(user => {
                 this._currentUser = user;
                 return user;
             }, error => {
@@ -60,8 +63,6 @@ export class AuthService {
         return this._http.post(this._authEndpoint, JSON.stringify(body), options)
             .flatMap((res) => {
 
-                // TODO: users/request-auth-token return Location: http://localhost/users/abcd-1234-zxcv-5678
-
                 if (res.status == 200) {
 
                     let body = res.json();
@@ -70,30 +71,35 @@ export class AuthService {
 
                     this.saveToken(token);
 
-                    return this._userService.getUser(jwtContent.uri).map((user:User) => {
+                    return this._userService.getUser(jwtContent.url).map((user:User) => {
                         this._currentUser = user;
                         return user;
                     });
 
                 } else if (res.status == 401) {
-
                     // TODO: more meaningful error
-                    throw new Error("Authentication failed: " + res.status);
+                    throw new Error();
 
                 } else {
-
                     // TODO: more meaningful error
-                    throw new Error("Some other error");
+                    throw new Error();
                 }
 
-            })
-            .catch(error => {
-
-                // TODO: better  Unknown error
-                let errMsg = error.message || 'Unknown error';
-                return Observable.throw(errMsg);
             });
+    }
 
+    /**
+     * Register new user
+     * @param email
+     * @param password
+     */
+    public register(email:String, password:String): Observable<Response> {
+        let options = {headers: new Headers({'Content-Type': 'application/json'})};
+        let body = {
+            email: email,
+            password: password,
+        };
+        return this._http.post(this._registerEndpoint, JSON.stringify(body), options);
     }
 
     /**

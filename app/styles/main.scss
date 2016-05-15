@@ -1,0 +1,62 @@
+@import "google-material-color/dist/palette";
+
+/**
+ * Common
+ */
+.btn, input.form-control {
+    border-radius: 0 !important;
+}
+.clickable {
+    cursor: pointer;
+}
+
+
+/**
+ * AuthComponent
+ */
+.login-modal {
+    display: block;
+    position: fixed;
+    top: 100px;
+
+    form {
+        margin: 0;
+    }
+
+    .login-failed-msg {
+        background: palette(Red, 100);
+        padding: 5px;
+    }
+
+    .login-switch {
+        cursor: pointer;
+        color: palette(Grey, 900);
+
+        .delimiter {
+            color: palette(Grey, 700);
+        }
+    }
+
+    .login-switch.disabled {
+        color: palette(Grey, 500);
+    }
+
+    .login-switch:hover {
+        color: palette(Grey, 900);
+        text-decoration: none;
+    }
+
+    input {
+        margin-bottom: 10px;
+    }
+
+    .controls {
+        margin-top: 20px;
+        text-align: right;
+
+        button {
+            margin-left: 5px;
+            width: 80px;
+        }
+    }
+}
