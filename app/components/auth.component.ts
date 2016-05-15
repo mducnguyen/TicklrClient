@@ -6,6 +6,7 @@
 import {Component, OnInit} from '@angular/core'
 import {AbstractControl, ControlGroup, Control, Validators} from '@angular/common'
 import {AuthService} from "../services/auth.service";
+import {AuthContext} from "../contexts/auth.context";
 
 @Component({
     selector: 'auth',
@@ -71,8 +72,7 @@ export class AuthComponent implements OnInit {
     /**
      * @param _authService handles remote authentication
      */
-    constructor(private _authService:AuthService) {
-
+    constructor(private _authService:AuthService, private _authContext:AuthContext) {
     }
 
     /**

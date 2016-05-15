@@ -1,15 +1,66 @@
 @import "google-material-color/dist/palette";
 
+$sidebar-width: 250px;
+
+$primary-font-color: palette(Grey, 900);
+
 /**
  * Common
  */
 .btn, input.form-control {
     border-radius: 0 !important;
 }
+
 .clickable {
     cursor: pointer;
 }
 
+/**
+ * Header
+ */
+.ticklr-header {
+    margin-bottom: 0;
+}
+
+/**
+ * Sidebar
+ */
+.ticklr-sidebar {
+    position: fixed;
+    height: 100%;
+    width: $sidebar-width;
+    box-sizing: border-box;
+    background: palette(Grey, 100);
+    border-right: 1px solid #eee;
+
+    ul {
+        cursor: pointer;
+        padding: 0;
+        list-style: none;
+
+        li {
+            a {
+                color: $primary-font-color;
+                line-height: 50px;
+                padding-left: 20px;
+                display: block;
+                text-decoration: none;
+            }
+        }
+
+        li:hover {
+            background: palette(Grey, 300);
+        }
+    }
+}
+
+/**
+ * Main container
+ */
+.ticklr-main {
+    margin-left: $sidebar-width;
+    padding: 10px;
+}
 
 /**
  * AuthComponent

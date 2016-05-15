@@ -1,25 +1,81 @@
 /**
+ * google-material-color v1.2.6
+ * https://github.com/danlevan/google-material-color
+ */
+/**
  * Common
  */
+.btn, input.form-control {
+  border-radius: 0 !important; }
+
+.clickable {
+  cursor: pointer; }
+
+/**
+ * Header
+ */
+.ticklr-header {
+  margin-bottom: 0; }
+
+/**
+ * Sidebar
+ */
+.ticklr-sidebar {
+  position: fixed;
+  height: 100%;
+  width: 250px;
+  box-sizing: border-box;
+  background: #F5F5F5;
+  border-right: 1px solid #eee; }
+  .ticklr-sidebar ul {
+    cursor: pointer;
+    padding: 0;
+    list-style: none; }
+    .ticklr-sidebar ul li a {
+      color: #212121;
+      line-height: 50px;
+      padding-left: 20px;
+      display: block;
+      text-decoration: none; }
+    .ticklr-sidebar ul li:hover {
+      background: #E0E0E0; }
+
+/**
+ * Main container
+ */
+.ticklr-main {
+  margin-left: 250px;
+  padding: 10px; }
 
 /**
  * AuthComponent
  */
 .login-modal {
-    display: block;
-    position: fixed;
-    top: 100px;
-}
-
-.login-modal input[type=text] {
-    margin-bottom: 10px;
-}
-.login-modal .controls {
+  display: block;
+  position: fixed;
+  top: 100px; }
+  .login-modal form {
+    margin: 0; }
+  .login-modal .login-failed-msg {
+    background: #FFCDD2;
+    padding: 5px; }
+  .login-modal .login-switch {
+    cursor: pointer;
+    color: #212121; }
+    .login-modal .login-switch .delimiter {
+      color: #616161; }
+  .login-modal .login-switch.disabled {
+    color: #9E9E9E; }
+  .login-modal .login-switch:hover {
+    color: #212121;
+    text-decoration: none; }
+  .login-modal input {
+    margin-bottom: 10px; }
+  .login-modal .controls {
     margin-top: 20px;
-    text-align: right;
+    text-align: right; }
+    .login-modal .controls button {
+      margin-left: 5px;
+      width: 80px; }
 
-}
-.login-modal .controls button {
-    margin-left: 5px;
-    width: 80px;
-}
+/*# sourceMappingURL=main.css.map */
