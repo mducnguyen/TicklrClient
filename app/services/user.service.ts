@@ -31,8 +31,7 @@ export class UserService {
         return this._http.get(url)
             .map(res => {
                 if (200 == res.status) {
-                    let result = res.json();
-                    return new User(result.id, result.email);
+                    return new User(res.json());
                 } else if (401 == res.status) {
                     throw new Error("Authorization failed: current user is not allowed to access this resource.");
                 } else {

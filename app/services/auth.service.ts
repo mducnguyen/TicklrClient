@@ -7,6 +7,7 @@ import {UserService} from "./user.service";
 import {Response, Headers, Http} from "@angular/http";
 import {AbstractStorage} from "./storage/abstract.storage";
 import {AppConfig} from "../config/app.config";
+import {AuthContext} from "../contexts/auth.context";
 
 /**
  * AuthService manages remote authentication and holds information about authenticated user.
@@ -18,10 +19,8 @@ import {AppConfig} from "../config/app.config";
 export class AuthService {
 
     private _authEndpoint:string;
-    private _registerEndpoint:string;
 
-    // authenticated user
-    private _currentUser:User;
+    private _registerEndpoint:string;
 
     /**
      * @param _http makes HTTP requests
@@ -29,21 +28,21 @@ export class AuthService {
      * @param _userService
      */
     constructor(private _http:Http, private jwtHelper:JwtHelper,
-                private _userService:UserService,
-                private _storage:AbstractStorage, appConfig:AppConfig) {
+                private _userService:UserService, private _storage:AbstractStorage,
+                appConfig:AppConfig, private _authContext:AuthContext) {
 
         this._authEndpoint = appConfig.API_ENDPOINT.AUTH;
         this._registerEndpoint = appConfig.API_ENDPOINT.REGISTER;
 
         let jwtToken = this.getToken();
 
-        if (!this.isLoggedIn() && jwtToken != null) {
+        if (!this._authContext.isLoggedIn() && jwtToken != null) {
             let jwtContent = this.jwtHelper.decodeToken(jwtToken);
             this._userService.getUser(jwtContent.url).subscribe(user => {
-                this._currentUser = user;
+                this._authContext.setUser(user);
                 return user;
             }, error => {
-
+                
             });
         }
     }
@@ -52,7 +51,7 @@ export class AuthService {
      * @param email
      * @param password
      */
-    login(email:String, password:String):Observable<User> {
+    public login(email:String, password:String):Observable<User> {
 
         let options = {headers: new Headers({'Content-Type': 'application/json'})};
         let body = {
@@ -72,7 +71,7 @@ export class AuthService {
                     this.saveToken(token);
 
                     return this._userService.getUser(jwtContent.url).map((user:User) => {
-                        this._currentUser = user;
+                        this._authContext.setUser(user);
                         return user;
                     });
 
@@ -93,7 +92,7 @@ export class AuthService {
      * @param email
      * @param password
      */
-    public register(email:String, password:String): Observable<Response> {
+    public register(email:String, password:String):Observable<Response> {
         let options = {headers: new Headers({'Content-Type': 'application/json'})};
         let body = {
             email: email,
@@ -107,15 +106,7 @@ export class AuthService {
      */
     public logout() {
         this._storage.removeItem(AUTH_TOKEN);
-        this._currentUser = null;
-    }
-
-
-    /**
-     * @return {boolean} true if user is already logged in, else false
-     */
-    public isLoggedIn():boolean {
-        return this._currentUser != null;
+        this._authContext.setUser(null);
     }
 
     /**

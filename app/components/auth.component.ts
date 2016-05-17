@@ -6,7 +6,6 @@
 import {Component, OnInit} from '@angular/core'
 import {AbstractControl, ControlGroup, Control, Validators} from '@angular/common'
 import {AuthService} from "../services/auth.service";
-import {AuthContext} from "../contexts/auth.context";
 
 @Component({
     selector: 'auth',
@@ -26,11 +25,15 @@ export class AuthComponent implements OnInit {
 
     public ctrlRegPasswordConfirm:Control;
 
-    public isLogin;
+    public isLogin:boolean;
 
-    public wrongEmailPassword;
+    public wrongEmailPassword:boolean;
 
-    private regEmailConflict;
+    private otherErrorLogin:boolean;
+
+    private regEmailConflict:boolean;
+
+    private otherErrorRegister:boolean;
 
     ngOnInit() {
 
@@ -67,12 +70,14 @@ export class AuthComponent implements OnInit {
         this.wrongEmailPassword = false;
 
         this.regEmailConflict = false;
+
+        this.otherErrorLogin = false;
     }
 
     /**
      * @param _authService handles remote authentication
      */
-    constructor(private _authService:AuthService, private _authContext:AuthContext) {
+    constructor(private _authService:AuthService) {
     }
 
     /**
@@ -83,14 +88,13 @@ export class AuthComponent implements OnInit {
             user => {
                 this.ctrlEmail.updateValue("");
                 this.ctrlPassword.updateValue("");
-                this.wrongEmailPassword = false;
+                this.turnOffError();
             },
             errorRes => {
                 if (errorRes.status == 401) {
                     this.wrongEmailPassword = true;
-                    console.log(errorRes);
                 } else {
-                    console.log(errorRes);
+                    this.otherErrorLogin = true;
                 }
             });
     }
@@ -103,17 +107,26 @@ export class AuthComponent implements OnInit {
         this._authService.register(this.ctrlEmail.value, this.ctrlRegPassword.value).subscribe(
             res => {
                 this.ctrlRegPasswordConfirm.updateValue("");
-                this.regEmailConflict = false;
                 this.login();
+                this.turnOffError();
             },
             errorRes => {
                 if (errorRes.status == 409) {
                     this.regEmailConflict = true;
-                    console.log(errorRes);
                 } else {
-                    console.log(errorRes);
+                    this.otherErrorRegister = true;
                 }
             }
         );
+    }
+
+    /**
+     * Hides all error messages
+     */
+    private turnOffError() {
+        this.regEmailConflict = false;
+        this.wrongEmailPassword = false;
+        this.otherErrorLogin = false;
+        this.otherErrorRegister = false;
     }
 }
