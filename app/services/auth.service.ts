@@ -8,6 +8,8 @@ import {Response, Headers, Http} from "@angular/http";
 import {AbstractStorage} from "./storage/abstract.storage";
 import {AppConfig} from "../config/app.config";
 import {AuthContext} from "../contexts/auth.context";
+import {Observer} from "rxjs/Observer";
+import {Subscriber} from "rxjs/Subscriber";
 
 /**
  * AuthService manages remote authentication and holds information about authenticated user.
@@ -34,16 +36,38 @@ export class AuthService {
         this._authEndpoint = appConfig.API_ENDPOINT.AUTH;
         this._registerEndpoint = appConfig.API_ENDPOINT.REGISTER;
 
-        let jwtToken = this.getToken();
+        // let jwtToken = this.getToken();
+        //
+        // if (!this._authContext.isLoggedIn() && jwtToken != null) {
+        //     let jwtContent = this.jwtHelper.decodeToken(jwtToken);
+        //     this._userService.getUser(jwtContent.url).subscribe(user => {
+        //         this._authContext.setUser(user);
+        //     }, error => {
+        //
+        //     });
+        // }
+    }
 
-        if (!this._authContext.isLoggedIn() && jwtToken != null) {
-            let jwtContent = this.jwtHelper.decodeToken(jwtToken);
-            this._userService.getUser(jwtContent.url).subscribe(user => {
-                this._authContext.setUser(user);
-                return user;
-            }, error => {
-                
-            });
+    /**
+     * Try logging in using authentication token accessible to the app
+     * (through e.g localStorage, sessionStorage or other mechanisms)
+     */
+    public tryLogin() {
+
+        if (!this._authContext.isLoggedIn()) {
+
+            let jwtToken = this.getToken();
+
+            if (jwtToken != null) {
+                let jwtContent = this.jwtHelper.decodeToken(jwtToken);
+                this._userService.getUser(jwtContent.url).subscribe(user => {
+                    this._authContext.setUser(user);
+                }, error => {
+                });
+            } else {
+                this._authContext.setUser(null);
+            }
+
         }
     }
 

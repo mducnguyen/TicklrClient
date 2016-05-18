@@ -1,18 +1,29 @@
 @import "google-material-color/dist/palette";
 
-$sidebar-width: 250px;
+$navbar-height: 50px;
+
+$sidebar-width: 200px;
 
 $primary-font-color: palette(Grey, 900);
 
 /**
  * Common
  */
-.btn, input.form-control {
+.btn, input.form-control, textarea.form-control {
     border-radius: 0 !important;
 }
 
 .clickable {
     cursor: pointer;
+}
+
+.ticklr-page-wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: $navbar-height;
+    border-left: 1px solid palette(Grey, 300);
+    border-right: 1px solid palette(Grey, 300);
+    min-height: 100%;
 }
 
 /**
@@ -30,7 +41,7 @@ $primary-font-color: palette(Grey, 900);
     height: 100%;
     width: $sidebar-width;
     box-sizing: border-box;
-    background: palette(Grey, 100);
+    background: palette(White);
     border-right: 1px solid #eee;
 
     ul {
@@ -49,7 +60,7 @@ $primary-font-color: palette(Grey, 900);
         }
 
         li:hover {
-            background: palette(Grey, 300);
+            background: palette(Grey, 200);
         }
     }
 }
@@ -59,7 +70,7 @@ $primary-font-color: palette(Grey, 900);
  */
 .ticklr-main {
     margin-left: $sidebar-width;
-    padding: 10px;
+    padding: 0;
 }
 
 /**
@@ -110,4 +121,31 @@ $primary-font-color: palette(Grey, 900);
             width: 80px;
         }
     }
+}
+
+/**
+ * EventsComponent
+ */
+.events-component {
+    margin: 20px;
+    .events-heading {
+        line-height: 50px;
+        h2 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+    }
+    .events-categories {
+        margin-top: 20px;
+    }
+    .events-list {
+        margin-top: 20px;
+    }
+}
+
+/**
+ * EventDetailComponent
+ */
+.event-detail-component {
+    margin: 20px;
 }

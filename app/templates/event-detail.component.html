@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/assets/js/simple-datetimepicker/jquery.simple-dtpicker.css">
+
+<div *ngIf="event" class="event-detail-component"  *ngIf="authContext().isLoggedIn()">
+
+    <form [ngFormModel]="eventForm" (ngSubmit)="save()">
+        <button type="submit" class="btn btn-primary">Save</button>
+
+        <div class="input-group">
+            <label for="title">Event Title</label>
+            <input type="text" class="form-control" id="title" [ngFormControl]="eventForm.controls.title" [(ngModel)]="event.title">
+        </div>
+
+        <div class="input-group">
+            <label for="description">Event Description</label>
+            <textarea id="description" cols="50" rows="10" class="form-control" [ngFormControl]="eventForm.controls.description" [(ngModel)]="event.description"></textarea>
+        </div>
+
+        <div>
+            <label for="startTime">Start Time</label>
+            <input id="startTime" type="text" class="form-control datetimepicker">
+        </div>
+
+        <div>
+            <label for="endTime">End Time</label>
+            <input id="endTime" type="text" class="form-control datetimepicker">
+        </div>
+
+    </form>
+</div>
+

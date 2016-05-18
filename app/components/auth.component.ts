@@ -3,15 +3,17 @@
  * @since 10/05/16
  */
 
-import {Component, OnInit} from '@angular/core'
+import {Component, OnInit} from "@angular/core";
+import {Router, OnActivate, RouteSegment, RouteTree} from "@angular/router";
 import {AbstractControl, ControlGroup, Control, Validators} from '@angular/common'
 import {AuthService} from "../services/auth.service";
+import {AuthContext} from "../contexts/auth.context";
 
 @Component({
     selector: 'auth',
     templateUrl: 'app/templates/auth.component.html',
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnActivate {
 
     public loginForm:ControlGroup;
 
@@ -34,6 +36,12 @@ export class AuthComponent implements OnInit {
     private regEmailConflict:boolean;
 
     private otherErrorRegister:boolean;
+
+    private _prevRouteSegment:RouteSegment;
+
+    routerOnActivate(curr:RouteSegment, prev?:RouteSegment, currTree?:RouteTree, prevTree?:RouteTree):void {
+        this._prevRouteSegment = prev;
+    }
 
     ngOnInit() {
 
@@ -72,12 +80,41 @@ export class AuthComponent implements OnInit {
         this.regEmailConflict = false;
 
         this.otherErrorLogin = false;
+
+        let that = this;
+
+        // redirect to the previous page if user is logged in
+        this._authContext.observable().subscribe(
+            (authContext:AuthContext) => {
+                if (authContext.isLoggedIn()) {
+                    this.goBack();
+                }
+            }
+        );
+
+        if (this._authContext.isLoggedIn()) {
+            this.goBack();
+        }
+    }
+
+    /**
+     * Go back to previous page
+     */
+    private goBack() {
+        if (this._prevRouteSegment == null) {
+            this._router.navigate(['/']);
+        } else {
+            let prevUrl = this._prevRouteSegment.urlSegments.map(urlSegment => {
+                return urlSegment.segment;
+            }).join('/');
+            this._router.navigate([prevUrl]);
+        }
     }
 
     /**
      * @param _authService handles remote authentication
      */
-    constructor(private _authService:AuthService) {
+    constructor(private _authService:AuthService, private _authContext:AuthContext, private _router:Router) {
     }
 
     /**
