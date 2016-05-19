@@ -7,8 +7,12 @@ import {Observable} from "rxjs/Observable";
 import {AuthHttp} from "angular2-jwt/angular2-jwt";
 import {Response} from "@angular/http";
 
-import {Event} from "../models/event";
+import {Event} from "./event";
 
+/**
+ * Event object that implement this interface will
+ * be accepted as request body at remote server.
+ */
 export interface EventRequest {
     title:string;
     description:string;
@@ -49,12 +53,13 @@ export class EventService {
     }
 
     /**
-     * Update an existing event
+     * Update an existing event at eventURL
+     * @param eventURL
      * @param event
      * @returns {Observable<Response>}
      */
-    public save(event:Event):Observable<Response> {
-        return this._http.put(event.href, JSON.stringify(event));
+    public save(eventURL:string, event:EventRequest):Observable<Response> {
+        return this._http.put(eventURL, JSON.stringify(event));
     }
 
     /**

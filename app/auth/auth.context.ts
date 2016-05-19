@@ -3,7 +3,7 @@
  * @since 15.05.16
  */
 import {Injectable} from  '@angular/core';
-import {User} from "../models/user";
+import {User} from "./user";
 import {Observable} from "rxjs/Observable";
 import {Subscriber} from "rxjs/Subscriber";
 import {Observer} from "rxjs/Observer";

@@ -6,12 +6,12 @@
 import {Component, OnInit} from "@angular/core";
 import {Control, ControlGroup, Validators} from "@angular/common";
 import {Router} from "@angular/router";
-import {Event} from "../../models/event";
-import {EventService} from "../../services/event.service";
-import {AuthContext} from "../../contexts/auth.context";
+import {Event} from "../event";
+import {EventService} from "../event.service";
+import {AuthContext} from "../../auth/auth.context";
 
 @Component({
-    templateUrl: 'app/templates/event-detail.component.html',
+    templateUrl: 'app/event/templates/event-detail.component.html',
     providers: [EventService]
 })
 export class CreateEventComponent implements OnInit {

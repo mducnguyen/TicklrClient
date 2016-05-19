@@ -4,19 +4,19 @@
  */
 
 import {Component, provide, OnInit} from '@angular/core';
-import {AuthComponent} from "./auth.component";
+import {AuthComponent} from "./auth/components/auth.component";
 import {AuthHttp, AuthConfig, JwtHelper} from "angular2-jwt/angular2-jwt";
 import {HTTP_PROVIDERS, Http} from "@angular/http";
 import {Router, Routes, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from "@angular/router";
-import {AUTH_TOKEN, AuthService} from "../services/auth.service";
-import {UserService} from "../services/user.service";
-import {AbstractStorage} from "../services/storage/abstract.storage";
-import {DelegateStorage} from "../services/storage/delegate.storage";
-import {APP_CONFIG, AppConfig} from "../config/app.config";
-import {EventsComponent} from "./event/events.component";
-import {EventDetailComponent} from "./event/event-detail.component";
-import {AuthContext} from "../contexts/auth.context";
-import {CreateEventComponent} from "./event/create-event.component";
+import {AUTH_TOKEN, AuthService} from "./auth/services/auth.service";
+import {UserService} from "./auth/services/user.service";
+import {AbstractStorage} from "./shared/storage/abstract.storage";
+import {DelegateStorage} from "./shared/storage/delegate.storage";
+import {APP_CONFIG, AppConfig} from "./shared/config/app.config";
+import {EventsComponent} from "./event/components/events.component";
+import {EventDetailComponent} from "./event/components/event-detail.component";
+import {AuthContext} from "./auth/auth.context";
+import {CreateEventComponent} from "./event/components/create-event.component";
 
 let authProvider = provide(AuthHttp, {
     useFactory: (http, storage) => {
@@ -42,7 +42,7 @@ let appConfigProvider = provide(AppConfig, {
 
 @Component({
     selector: 'app',
-    templateUrl: 'app/templates/app.component.html',
+    templateUrl: 'app/shared/templates/app.component.html',
     directives: [AuthComponent, ROUTER_DIRECTIVES],
     providers: [HTTP_PROVIDERS, ROUTER_PROVIDERS, UserService, JwtHelper, authProvider,
         storageProvider, AuthService, appConfigProvider, AuthContext]

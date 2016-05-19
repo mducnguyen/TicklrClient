@@ -2,14 +2,12 @@ import {Injectable, Inject} from "@angular/core";
 import {JwtHelper} from "angular2-jwt/angular2-jwt";
 import 'rxjs/Rx';
 import {Observable} from "rxjs/Observable";
-import {User} from "../models/user";
+import {User} from "../user";
 import {UserService} from "./user.service";
 import {Response, Headers, Http} from "@angular/http";
-import {AbstractStorage} from "./storage/abstract.storage";
-import {AppConfig} from "../config/app.config";
-import {AuthContext} from "../contexts/auth.context";
-import {Observer} from "rxjs/Observer";
-import {Subscriber} from "rxjs/Subscriber";
+import {AbstractStorage} from "../../shared/storage/abstract.storage";
+import {AppConfig} from "../../shared/config/app.config";
+import {AuthContext} from "../auth.context";
 
 /**
  * AuthService manages remote authentication and holds information about authenticated user.

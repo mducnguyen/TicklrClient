@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {AuthHttp} from "angular2-jwt/angular2-jwt";
-import {User} from "../models/user";
-import {AppConfig} from "../config/app.config";
+import {User} from "../user";
+import {AppConfig} from "../../shared/config/app.config";
 
 /**
  * @author DucNguyenMinh

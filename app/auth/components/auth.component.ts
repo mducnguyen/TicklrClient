@@ -7,11 +7,11 @@ import {Component, OnInit} from "@angular/core";
 import {Router, OnActivate, RouteSegment, RouteTree} from "@angular/router";
 import {AbstractControl, ControlGroup, Control, Validators} from '@angular/common'
 import {AuthService} from "../services/auth.service";
-import {AuthContext} from "../contexts/auth.context";
+import {AuthContext} from "../auth.context";
 
 @Component({
     selector: 'auth',
-    templateUrl: 'app/templates/auth.component.html',
+    templateUrl: 'app/auth/templates/auth.component.html',
 })
 export class AuthComponent implements OnInit, OnActivate {
 
