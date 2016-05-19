@@ -26,6 +26,14 @@ $primary-font-color: palette(Grey, 900);
     min-height: 100%;
 }
 
+* {
+    z-index: 0;
+}
+
+.ui-datepicker-calendar {
+    z-index: 1;
+}
+
 /**
  * Header
  */

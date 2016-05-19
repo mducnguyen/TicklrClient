@@ -66,7 +66,8 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
     }
 
     get month():string {
-        return (this._month < 10 ? "0" : "") + this._month;
+        let month = this._month + 1; // month in js 0..11
+        return (month < 10 ? "0" : "") + month;
     }
 
     get year():string {
@@ -77,21 +78,22 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
         return (this._hour < 10 ? "0" : "") + this._hour;
     }
 
-    get dateStr():string {
+    get normalizedDateStr():string {
         return `${this.date}.${this.month}.${this.year}`;
     }
 
     // binds with the input in the view
     public dateInputStr:string;
 
-    public jQueryDateInput;
 
     ngAfterViewChecked() {
-        let dateInput = jQuery(this.dateInput.nativeElement);
-        dateInput.datepicker({
-            dateFormat: "dd.mm.yyyy"
+        jQuery(this.dateInput.nativeElement).datepicker({
+            dateFormat: "dd.mm.yy",
+            onSelect: (val) => {
+                this.dateInputStr = val;
+                this.onDateChange()
+            }
         });
-        dateInput.datepicker('setDate', `${this.date}.${this.month+1}.${this.year}`);
     }
 
     constructor() {
@@ -128,17 +130,17 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
      * Bring date input into correct format when date input field lose focus
      */
     public normalizeDateInput() {
-        this.dateInputStr = this.dateStr;
+        this.dateInputStr = this.normalizedDateStr;
     }
 
     /**
      * Update internal date object when date input field changes
      */
     public onDateChange() {
-        let date:Date;
-        if (this._isValidDate(this.dateInputStr)) {
-            date = new Date(this.dateInputStr);
-        } else {
+
+        let date:Date = this.parseDate(this.dateInputStr);
+
+        if (date == null) {
             date = jQuery(this.dateInput.nativeElement).datepicker('getDate');
         }
 
@@ -152,16 +154,25 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
 
     /**
      * @param dateStr
-     * @return true if date is of form dd.mm.YYYY, otherwise false
+     * @return a Date object if dateStr is a valid date of form dd.mm.yyyy, else null
      */
-    private _isValidDate(dateStr:string):boolean {
+    private parseDate(dateStr:string):boolean {
+
         let regex = /^(\d{1,2})\.(\d{1,2}).(\d{4})$/;
         let match = regex.exec(dateStr);
         if (match == null)
-            return false;
+            return null;
 
-        let date = new Date(+match[3], +match[2], +match[1]);
-        return date.getDate() == +match[1] && (date.getMonth() + 1) == +match[2] && date.getFullYear() == +match[3];
+        let year = +match[3];
+        let month = (+match[2]) - 1; // month in js 0..11
+        let day = +match[1];
+
+        let date = new Date(year, month, day);
+
+        if (date.getDate() == day && date.getMonth() == month && date.getFullYear() == year)
+            return date;
+
+        return null;
     }
 
 
@@ -259,12 +270,12 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
     writeValue(obj:any):void {
         if (obj !== undefined && obj !== null) {
             let date = obj as Date;
-            console.log(date);
             this._date = date.getDate();
             this._month = date.getMonth();
             this._year = date.getFullYear();
             this._hour = date.getHours();
             this._minute = date.getMinutes();
+            this.normalizeDateInput();
         }
     }
 

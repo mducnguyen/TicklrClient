@@ -25,8 +25,8 @@
 
         <div>
             <label>Visibility:</label>
-            <input type="radio" id="public_yes" name="public" (change)="model.isPublic = true"> <label for="public_yes">This is a public event.</label>
-            <input type="radio" id="public_no" name="public" (change)="model.isPublic = false"> <label for="public_no">This is a private event.</label>
+            <input type="radio" id="public_yes" name="public" (change)="model.isPublic = true" [checked]="model.isPublic"> <label for="public_yes">This is a public event.</label>
+            <input type="radio" id="public_no" name="public" (change)="model.isPublic = false" [checked]="!model.isPublic"> <label for="public_no">This is a private event.</label>
         </div>
 
     </form>

@@ -56,8 +56,8 @@ export class EventDetailComponent implements OnActivate, AfterViewChecked {
             title: this.model.title,
             description: this.model.description,
             isPublic: this.model.isPublic,
-            startTime: this.model.getStartTime(),
-            endTime: this.model.getEndTime()
+            startTime: this.model.startTime,
+            endTime: this.model.endTime
         };
 
         this._eventService.save(this._event.href, eventRequest).subscribe(
