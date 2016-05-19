@@ -1,94 +1,102 @@
-<div class="login-modal modal" *ngIf="isLogin">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">
-                    <span class="pull-left">Organiser Login</span>
+<div class="auth-component">
+    <div class="login-modal modal" *ngIf="isLogin">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span class="pull-left">Organiser Login</span>
                     <span class="pull-right">
                         <a class="login-switch" [class.disabled]="isLogin" (click)="isLogin = false">REGISTER</a>
                         /
                         <a class="login-switch" [class.disabled]="!isLogin" (click)="isLogin = true">LOGIN</a>
                     </span>
-                </h4>
-            </div>
-            <div class="modal-body">
+                    </h4>
+                </div>
+                <div class="modal-body">
 
-                <p class="login-failed-msg" *ngIf="wrongEmailPassword">Wrong email or password. Please try again!</p>
+                    <p class="login-failed-msg" *ngIf="wrongEmailPassword">Wrong email or password. Please try
+                        again!</p>
 
-                <p class="login-failed-msg" *ngIf="otherErrorLogin">Sorry we can't log you in due to an unexpected error. Please try again later!</p>
+                    <p class="login-failed-msg" *ngIf="otherErrorLogin">Sorry we can't log you in due to an unexpected
+                        error. Please try again later!</p>
 
-                <form id="login-form" ngForm="loginForm" (ngSubmit)="login()" #f="ngForm">
+                    <form id="login-form" ngForm="loginForm" (ngSubmit)="login()" #f="ngForm">
 
-                    <div class="form-group" [class.has-error]="ctrlEmail.dirty && !ctrlEmail.valid">
-                        <label for="email" class="control-label">Email</label>
-                        <span class="small" *ngIf="ctrlEmail.dirty && !ctrlEmail.valid">(Email is not correct)</span>
-                        <input type="text" class="form-control" id="email" [ngFormControl]="ctrlEmail">
-                    </div>
+                        <div class="form-group" [class.has-error]="ctrlEmail.dirty && !ctrlEmail.valid">
+                            <label for="email" class="control-label">Email</label>
+                            <span class="small"
+                                  *ngIf="ctrlEmail.dirty && !ctrlEmail.valid">(Email is not correct)</span>
+                            <input type="text" class="form-control" id="email" [ngFormControl]="ctrlEmail">
+                        </div>
 
-                    <div class="form-group" [class.has-error]="ctrlPassword.dirty && !ctrlPassword.valid">
-                        <label for="password" class="control-label">Password</label>
-                        <span class="small" *ngIf="ctrlEmail.dirty && !ctrlEmail.valid">(Password must be at least 8 characters long)</span>
-                        <input type="password" class="form-control" id="password" [ngFormControl]="ctrlPassword">
-                    </div>
+                        <div class="form-group" [class.has-error]="ctrlPassword.dirty && !ctrlPassword.valid">
+                            <label for="password" class="control-label">Password</label>
+                            <span class="small" *ngIf="ctrlEmail.dirty && !ctrlEmail.valid">(Password must be at least 8 characters long)</span>
+                            <input type="password" class="form-control" id="password" [ngFormControl]="ctrlPassword">
+                        </div>
 
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
 
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="login-modal modal" *ngIf="!isLogin">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">
-                    <span class="pull-left">Be an Organiser</span>
+    <div class="login-modal modal" *ngIf="!isLogin">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span class="pull-left">Be an Organiser</span>
                     <span class="pull-right">
                         <a class="login-switch" [class.disabled]="isLogin" (click)="isLogin = false">REGISTER</a>
                         <span class="delimiter">/</span>
                         <a class="login-switch" [class.disabled]="!isLogin" (click)="isLogin = true">LOGIN</a>
                     </span>
-                </h4>
-            </div>
+                    </h4>
+                </div>
 
-            <div class="modal-body">
+                <div class="modal-body">
 
-                <p class="login-failed-msg" *ngIf="regEmailConflict">This email has already been taken. Please try
-                    another one!</p>
+                    <p class="login-failed-msg" *ngIf="regEmailConflict">This email has already been taken. Please try
+                        another one!</p>
 
-                <p class="login-failed-msg" *ngIf="otherErrorRegister">Sorry registration didn't succeed due to an unexpected error. Please try again later!</p>
+                    <p class="login-failed-msg" *ngIf="otherErrorRegister">Sorry registration didn't succeed due to an
+                        unexpected error. Please try again later!</p>
 
-                <form id="register-form" ngForm="registerForm" (ngSubmit)="register()">
-                    <div class="form-group" [class.has-error]="ctrlEmail.dirty && !ctrlEmail.valid"
-                         [class.has-success]="ctrlEmail.dirty && ctrlEmail.valid">
-                        <label for="reg-email" class="control-label">Email * </label>
-                        <input type="text" class="form-control" id="reg-email" [ngFormControl]="ctrlEmail">
-                    </div>
+                    <form id="register-form" ngForm="registerForm" (ngSubmit)="register()">
+                        <div class="form-group" [class.has-error]="ctrlEmail.dirty && !ctrlEmail.valid"
+                             [class.has-success]="ctrlEmail.dirty && ctrlEmail.valid">
+                            <label for="reg-email" class="control-label">Email * </label>
+                            <input type="text" class="form-control" id="reg-email" [ngFormControl]="ctrlEmail">
+                        </div>
 
-                    <div class="form-group" [class.has-error]="ctrlRegPassword.dirty && !ctrlRegPassword.valid"
-                         [class.has-success]="ctrlRegPassword.dirty && ctrlRegPassword.valid">
-                        <label for="reg-password" class="control-label">Password * </label>
-                        <span class="small" *ngIf="ctrlRegPassword.dirty && !ctrlRegPassword.valid">(Password must be at least 8 characters long)</span>
-                        <input type="password" class="form-control" id="reg-password" [ngFormControl]="ctrlRegPassword">
-                    </div>
+                        <div class="form-group" [class.has-error]="ctrlRegPassword.dirty && !ctrlRegPassword.valid"
+                             [class.has-success]="ctrlRegPassword.dirty && ctrlRegPassword.valid">
+                            <label for="reg-password" class="control-label">Password * </label>
+                            <span class="small" *ngIf="ctrlRegPassword.dirty && !ctrlRegPassword.valid">(Password must be at least 8 characters long)</span>
+                            <input type="password" class="form-control" id="reg-password"
+                                   [ngFormControl]="ctrlRegPassword">
+                        </div>
 
-                    <div class="form-group"
-                         [class.has-error]="ctrlRegPasswordConfirm.dirty && !ctrlRegPasswordConfirm.valid"
-                         [class.has-success]="ctrlRegPasswordConfirm.dirty && ctrlRegPasswordConfirm.valid">
-                        <label for="reg-password-confirm" class="control-label">Confirm password *</label>
-                        <span class="small" *ngIf="ctrlRegPasswordConfirm.dirty && !ctrlRegPasswordConfirm.valid">(Password confirmation does not match)</span>
-                        <input type="password" class="form-control" id="reg-password-confirm"
-                               [ngFormControl]="ctrlRegPasswordConfirm">
-                    </div>
+                        <div class="form-group"
+                             [class.has-error]="ctrlRegPasswordConfirm.dirty && !ctrlRegPasswordConfirm.valid"
+                             [class.has-success]="ctrlRegPasswordConfirm.dirty && ctrlRegPasswordConfirm.valid">
+                            <label for="reg-password-confirm" class="control-label">Confirm password *</label>
+                            <span class="small" *ngIf="ctrlRegPasswordConfirm.dirty && !ctrlRegPasswordConfirm.valid">(Password confirmation does not match)</span>
+                            <input type="password" class="form-control" id="reg-password-confirm"
+                                   [ngFormControl]="ctrlRegPasswordConfirm">
+                        </div>
 
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </div>
-                </form>
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

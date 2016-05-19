@@ -48,10 +48,10 @@ let appConfigProvider = provide(AppConfig, {
         storageProvider, AuthService, appConfigProvider, AuthContext]
 })
 @Routes([
-    {path: '/auth', component: AuthComponent},
     {path: '/events/create', component: CreateEventComponent},
     {path: '/events/:eventHref', component: EventDetailComponent},
     {path: '/events', component: EventsComponent},
+    {path: '/login', component: AuthComponent},
 ])
 export class AppComponent {
 
@@ -64,7 +64,7 @@ export class AppComponent {
         this._authContext.observable().subscribe(
             (authContext:AuthContext) => {
                 if (!authContext.isLoggedIn()) {
-                    this._router.navigate(['/auth']);
+                    this._router.navigate(['login']);
                 }
             }
         );

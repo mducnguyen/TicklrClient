@@ -2,7 +2,7 @@
 
     <div class="events-heading">
         <h2 class="pull-left">Your Events</h2>
-        <a class="btn btn-primary pull-right" [routerLink]="['./create']"><span class="glyphicon glyphicon-plus"></span> Create Event</a>
+        <a class="btn btn-primary pull-right" [routerLink]="['/events/create']"><span class="glyphicon glyphicon-plus"></span> Create Event</a>
     </div>
 
     <div class="clearfix"></div>
@@ -17,7 +17,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><a [routerLink]="['./', event.href|base64]">{{event.title | capitalize}}</a>
+                <h3 class="panel-title"><a [routerLink]="['/events/', event.href|base64]">{{event.title | capitalize}}</a>
                 </h3>
             </div>
             <div class="panel-body">

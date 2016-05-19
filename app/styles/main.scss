@@ -30,6 +30,7 @@ $primary-font-color: palette(Grey, 900);
  * Header
  */
 .ticklr-header {
+    z-index: 1;
     margin-bottom: 0;
 }
 
@@ -76,49 +77,60 @@ $primary-font-color: palette(Grey, 900);
 /**
  * AuthComponent
  */
-.login-modal {
-    display: block;
+.auth-component {
     position: fixed;
-    top: 100px;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(#000, .8);
+    z-index: 2;
 
-    form {
-        margin: 0;
-    }
+    .login-modal {
+        display: block;
+        position: fixed;
+        top: 100px;
+        z-index: 3;
 
-    .login-failed-msg {
-        background: palette(Red, 100);
-        padding: 5px;
-    }
-
-    .login-switch {
-        cursor: pointer;
-        color: palette(Grey, 900);
-
-        .delimiter {
-            color: palette(Grey, 700);
+        form {
+            margin: 0;
         }
-    }
 
-    .login-switch.disabled {
-        color: palette(Grey, 500);
-    }
+        .login-failed-msg {
+            background: palette(Red, 100);
+            padding: 5px;
+        }
 
-    .login-switch:hover {
-        color: palette(Grey, 900);
-        text-decoration: none;
-    }
+        .login-switch {
+            cursor: pointer;
+            color: palette(Grey, 900);
 
-    input {
-        margin-bottom: 10px;
-    }
+            .delimiter {
+                color: palette(Grey, 700);
+            }
+        }
 
-    .controls {
-        margin-top: 20px;
-        text-align: right;
+        .login-switch.disabled {
+            color: palette(Grey, 500);
+        }
 
-        button {
-            margin-left: 5px;
-            width: 80px;
+        .login-switch:hover {
+            color: palette(Grey, 900);
+            text-decoration: none;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            margin-top: 20px;
+            text-align: right;
+
+            button {
+                margin-left: 5px;
+                width: 80px;
+            }
         }
     }
 }

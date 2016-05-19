@@ -35,17 +35,6 @@ export class AuthService {
 
         this._authEndpoint = appConfig.API_ENDPOINT.AUTH;
         this._registerEndpoint = appConfig.API_ENDPOINT.REGISTER;
-
-        // let jwtToken = this.getToken();
-        //
-        // if (!this._authContext.isLoggedIn() && jwtToken != null) {
-        //     let jwtContent = this.jwtHelper.decodeToken(jwtToken);
-        //     this._userService.getUser(jwtContent.url).subscribe(user => {
-        //         this._authContext.setUser(user);
-        //     }, error => {
-        //
-        //     });
-        // }
     }
 
     /**

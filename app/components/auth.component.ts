@@ -81,8 +81,6 @@ export class AuthComponent implements OnInit, OnActivate {
 
         this.otherErrorLogin = false;
 
-        let that = this;
-
         // redirect to the previous page if user is logged in
         this._authContext.observable().subscribe(
             (authContext:AuthContext) => {
