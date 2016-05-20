@@ -81,10 +81,10 @@
 
     <div class="time form-control" [class.focus]="activePart == 'hour' || activePart == 'minute'">
         <label (click)="edit('hour')" [class.active]="activePart == 'hour'">{{hour}}</label>
-        <input type="text" class="hour" #hourInput (keypress)="onHourInput($event)" (focus)="edit('hour')" (focusout)="edit('')">
+        <input type="text" class="hour" #hourInput (keyup)="onHourInput($event)" (focus)="edit('hour')" (focusout)="edit('')" >
         :
         <label (click)="edit('minute')" [class.active]="activePart == 'minute'">{{minute}}</label>
-        <input type="text" class="minute" #minuteInput (keypress)="onMinuteInput($event)" (focus)="edit('minute')" (focusout)="edit('')">
+        <input type="text" class="minute" #minuteInput (keyup)="onMinuteInput($event)" (focus)="edit('minute')" (focusout)="edit('')">
 
         <span class="time-icon glyphicon glyphicon-time"> </span>
     </div>

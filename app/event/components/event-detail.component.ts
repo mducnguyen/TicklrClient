@@ -2,10 +2,11 @@
  * @author ngnmhieu
  * @since 16.05.16
  */
-import {Component, AfterViewChecked, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {RouteSegment, OnActivate, RouteTree} from "@angular/router"
 import {EventService, EventRequest} from "../event.service";
 import {Validators, ControlGroup, Control} from "@angular/common"
+import {EventModel} from "./event.model";
 import {Event} from "../event";
 import {DateTimeInput} from "./datetime.input";
 
@@ -14,10 +15,7 @@ import {DateTimeInput} from "./datetime.input";
     providers: [EventService],
     directives: [DateTimeInput]
 })
-export class EventDetailComponent implements OnActivate, AfterViewChecked {
-
-    ngAfterViewChecked() {
-    }
+export class EventDetailComponent implements OnActivate {
 
     private _event:Event;
 
@@ -68,28 +66,3 @@ export class EventDetailComponent implements OnActivate, AfterViewChecked {
         );
     }
 }
-
-class EventModel {
-
-    title:string;
-
-    description:string;
-
-    startTime:Date;
-
-    endTime:Date;
-
-    isPublic:boolean;
-
-    /**
-     * @param event original event object
-     */
-    constructor(event:Event) {
-        this.title = event.title;
-        this.description = event.description;
-        this.startTime = event.startTime;
-        this.endTime = event.endTime;
-        this.isPublic = event.isPublic;
-    }
-}
-

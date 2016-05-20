@@ -68,7 +68,7 @@ export class EventService {
      * @param event
      * @returns {Observable<Response>}
      */
-    public saveNew(eventsURL:string, event:Event) {
+    public saveNew(eventsURL:string, event:EventRequest) {
         return this._http.post(eventsURL, JSON.stringify(event));
     }
 }

@@ -6,22 +6,24 @@
 import {Component, OnInit} from "@angular/core";
 import {Control, ControlGroup, Validators} from "@angular/common";
 import {Router} from "@angular/router";
-import {Event} from "../event";
-import {EventService} from "../event.service";
+import {EventService, EventRequest} from "../event.service";
 import {AuthContext} from "../../auth/auth.context";
+import {EventModel} from "./event.model";
+import {DateTimeInput} from "./datetime.input";
 
 @Component({
     templateUrl: 'app/event/templates/event-detail.component.html',
-    providers: [EventService]
+    providers: [EventService],
+    directives: [DateTimeInput]
 })
 export class CreateEventComponent implements OnInit {
 
-    public event:Event;
+    public model:EventModel;
 
     public eventForm:ControlGroup;
 
     ngOnInit() {
-        this.event = new Event();
+        this.model = new EventModel();
     }
 
     constructor(private _eventService:EventService, private _router:Router, private _authContext:AuthContext) {
@@ -35,8 +37,18 @@ export class CreateEventComponent implements OnInit {
      * Create new event and redirect to edit newly created event
      */
     public save() {
+        
         let location = this._authContext.getUser().events.href;
-        this._eventService.saveNew(location, this.event).subscribe(
+
+        let eventRequest:EventRequest = {
+            title: this.model.title,
+            description: this.model.description,
+            isPublic: this.model.isPublic,
+            startTime: this.model.startTime,
+            endTime: this.model.endTime
+        };
+
+        this._eventService.saveNew(location, eventRequest).subscribe(
             res => {
                 let location = res.headers.get("Location");
                 this._router.navigate(["/events", btoa(location)])
@@ -45,9 +57,5 @@ export class CreateEventComponent implements OnInit {
 
             }
         );
-    }
-
-    public authContext():AuthContext {
-        return this._authContext;
     }
 }

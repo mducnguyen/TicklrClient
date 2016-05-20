@@ -14,9 +14,12 @@ declare var jQuery;
 
 /**
  * Datetime UI Component
+ *
  * Parameters:
  *  - use [id] or [class] to target the wrapper element of the component. E.g: <datetime-input [id]="'myDateTime'"></datetime-input>
+ * TODO: at the moment the component only deals with local timezone. Add timezone parameter in the future!!
  *
+ * Require jQuery-UI for the Date field
  */
 @Component({
     selector: 'datetime-input',
@@ -156,7 +159,7 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
      * @param dateStr
      * @return a Date object if dateStr is a valid date of form dd.mm.yyyy, else null
      */
-    private parseDate(dateStr:string):boolean {
+    private parseDate(dateStr:string):Date {
 
         let regex = /^(\d{1,2})\.(\d{1,2}).(\d{4})$/;
         let match = regex.exec(dateStr);
@@ -180,11 +183,17 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
      * @param $event
      */
     public onHourInput($event:KeyboardEvent) {
-        let digit:number = this._getDigit($event);
-        if (digit != -1) {
-            let newHour = Number(String(this._hour) + digit);
-            this._setHour(newHour < 24 ? newHour : digit);
+
+        if ($event.code == "Backspace") {
+            this._setHour(0);
+        } else {
+            let digit:number = this._getDigit($event);
+            if (digit != -1) {
+                let newHour = Number(String(this._hour) + digit);
+                this._setHour(newHour < 24 ? newHour : digit);
+            }
         }
+        
         $event.preventDefault();
     }
 
@@ -192,11 +201,18 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
      * @param $event
      */
     public onMinuteInput($event:KeyboardEvent) {
-        let digit:number = this._getDigit($event);
-        if (digit != -1) {
-            let newMinute = Number(String(this._minute) + digit);
-            this._setMinute(newMinute < 60 ? newMinute : digit);
+
+        if ($event.code == "Backspace") {
+            this._setMinute(0);
+        } else {
+            let digit:number = this._getDigit($event);
+
+            if (digit != -1) {
+                let newMinute = Number(String(this._minute) + digit);
+                this._setMinute(newMinute < 60 ? newMinute : digit);
+            }
         }
+
         $event.preventDefault();
     }
 
@@ -206,8 +222,10 @@ export class DateTimeInput implements ControlValueAccessor, AfterViewChecked {
      */
     private _getDigit($event:KeyboardEvent):number {
 
-        if (48 <= $event.charCode && $event.charCode <= 57)
-            return $event.charCode - 48;
+        let key = $event.which || $event.keyCode || $event.charCode;
+
+        if (48 <= key && key <= 57)
+            return key - 48;
 
         return -1;
     }
